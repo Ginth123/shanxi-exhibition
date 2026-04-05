@@ -1,0 +1,2194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>波澜壮阔半边天——改革开放以来山西女性纪实展</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;400;600;700;900&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<style>
+  :root {
+    --red: #8B1A1A;
+    --deep-red: #5C0A0A;
+    --crimson: #C0392B;
+    --gold: #FFD700;
+    --bright-gold: #F0C040;
+    --dark: #110808;
+    --parchment: #FFF4E0;
+    --ink: #1a0a00;
+    --blue: #0D1B2A;
+    --deep-blue: #071015;
+    --teal: #1B4D6A;
+    --green: #1E5631;
+    --warm: #E8720C;
+    --cream: #FDF6E3;
+    --accent-gold: #FFEA70;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--dark);
+    font-family: 'Noto Serif SC', serif;
+    color: var(--parchment);
+    cursor: default;
+  }
+
+  /* ============ SCREEN SYSTEM ============ */
+  #app {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .screen {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.7s ease;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) transparent;
+  }
+
+  .screen.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .screen::-webkit-scrollbar { width: 4px; }
+  .screen::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+  /* ============ PARTICLES ============ */
+  #particles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: float linear infinite;
+    opacity: 0;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.3; }
+    100% { transform: translateY(-20px) translateX(var(--drift)); opacity: 0; }
+  }
+
+  /* ============ SCREEN 1: COVER ============ */
+  #s1 {
+    background: radial-gradient(ellipse at center bottom, #3D0505 0%, #1a0505 40%, #0a0202 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 24px;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #s1::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(139,26,26,0.08) 80px, rgba(139,26,26,0.08) 81px),
+      repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(139,26,26,0.08) 80px, rgba(139,26,26,0.08) 81px);
+    pointer-events: none;
+  }
+
+  .cover-badge {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    opacity: 0.8;
+    margin-bottom: 32px;
+    text-transform: uppercase;
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 6px 16px;
+    animation: fadeIn 1.5s 0.5s both;
+  }
+
+  .cover-title-zh {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: clamp(2.8rem, 8vw, 5.5rem);
+    line-height: 1.2;
+    background: linear-gradient(135deg, #F0C040, #C9A84C, #F0C040);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    animation: fadeSlideUp 1.2s 0.8s both;
+    position: relative;
+  }
+
+  .cover-title-zh::after {
+    content: '波澜壮阔半边天';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #F0C040, #C9A84C, #F0C040);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: blur(12px);
+    opacity: 0.4;
+    z-index: -1;
+  }
+
+  .cover-subtitle {
+    font-size: clamp(0.85rem, 2.5vw, 1.1rem);
+    color: rgba(245, 230, 200, 0.75);
+    letter-spacing: 3px;
+    margin-top: 16px;
+    animation: fadeSlideUp 1.2s 1.1s both;
+  }
+
+  .cover-line {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 28px auto;
+    animation: expandWidth 1s 1.3s both;
+  }
+
+  .cover-desc {
+    font-size: 13px;
+    color: rgba(245,230,200,0.55);
+    letter-spacing: 1.5px;
+    line-height: 2;
+    max-width: 320px;
+    margin: 0 auto 40px;
+    animation: fadeIn 1s 1.5s both;
+  }
+
+  .btn-enter {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    border: 1.5px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Noto Serif SC', serif;
+    font-size: 15px;
+    letter-spacing: 4px;
+    padding: 14px 36px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    animation: fadeIn 1s 1.8s both, breathe 2.5s 2.5s infinite;
+  }
+
+  .btn-enter::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  .btn-enter:hover::before { left: 100%; }
+  .btn-enter:hover {
+    background: rgba(201,168,76,0.15);
+    box-shadow: 0 0 20px rgba(201,168,76,0.3);
+  }
+
+  .cover-year-range {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    letter-spacing: 6px;
+    color: rgba(201,168,76,0.4);
+    animation: fadeIn 1s 2s both;
+  }
+
+  .seal {
+    position: absolute;
+    top: 32px; right: 24px;
+    width: 60px; height: 60px;
+    border: 2px solid var(--crimson);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 11px;
+    color: var(--crimson);
+    text-align: center;
+    line-height: 1.3;
+    animation: fadeIn 1.5s 2s both;
+    transform: rotate(12deg);
+  }
+
+  /* ============ SCREEN 2: FOREWORD ============ */
+  #s2 {
+    background: linear-gradient(160deg, #100505 0%, #1a0808 50%, #0d0303 100%);
+    padding: 60px 32px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .foreword-label {
+    font-size: 10px;
+    letter-spacing: 6px;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 32px;
+  }
+
+  .foreword-title {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 2.2rem;
+    color: var(--gold);
+    margin-bottom: 32px;
+  }
+
+  .foreword-text {
+    font-size: 15px;
+    line-height: 2.2;
+    color: rgba(245,230,200,0.82);
+    border-left: 2px solid var(--crimson);
+    padding-left: 20px;
+    margin-bottom: 40px;
+  }
+
+  .typewriter {
+    overflow: hidden;
+    white-space: pre-wrap;
+  }
+
+  /* ============ SCREEN 3: NAVIGATION HALL ============ */
+  #s3 {
+    background: linear-gradient(180deg, #0a0202 0%, #110505 100%);
+    padding: 50px 24px 70px;
+    min-height: 100vh;
+  }
+
+  .hall-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .hall-header .label {
+    font-size: 10px;
+    letter-spacing: 6px;
+    color: var(--gold);
+    opacity: 0.6;
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .hall-header h2 {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 2rem;
+    color: var(--parchment);
+  }
+
+  .hall-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin: 16px auto;
+    opacity: 0.5;
+  }
+
+  .pavilion-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .pavilion-card {
+    background: linear-gradient(135deg, rgba(139,26,26,0.12), rgba(139,26,26,0.04));
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px;
+    padding: 24px 16px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pavilion-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: scaleX(0);
+    transition: transform 0.35s;
+  }
+
+  .pavilion-card:hover::before { transform: scaleX(1); }
+  .pavilion-card:hover {
+    border-color: rgba(201,168,76,0.5);
+    background: linear-gradient(135deg, rgba(139,26,26,0.2), rgba(139,26,26,0.1));
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(139,26,26,0.3);
+  }
+
+  .pavilion-icon {
+    font-size: 2rem;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .pavilion-num {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 6px;
+  }
+
+  .pavilion-name {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 1rem;
+    color: var(--parchment);
+    line-height: 1.4;
+  }
+
+  .pavilion-sub {
+    font-size: 10px;
+    color: rgba(245,230,200,0.45);
+    margin-top: 8px;
+    letter-spacing: 1px;
+  }
+
+  /* ============ COMMON HALL ELEMENTS ============ */
+  .hall-bg-1 { background: radial-gradient(circle at 50% 30%, #2A0A0A 0%, #130a02 70%, #050200 100%); }
+  .hall-bg-2 { background: radial-gradient(circle at 50% 30%, #0D2B45 0%, #071520 70%, #010408 100%); }
+  .hall-bg-3 { background: radial-gradient(circle at 50% 30%, #2D1E05 0%, #0f0a02 70%, #050300 100%); }
+  .hall-bg-4 { background: radial-gradient(circle at 50% 30%, #2D1405 0%, #100804 70%, #050200 100%); }
+
+  .hall-screen {
+    min-height: 100vh;
+    padding: 0 0 80px;
+  }
+
+  .hall-top {
+    padding: 40px 28px 32px;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    margin-bottom: 32px;
+  }
+
+  .hall-top .room-num {
+    font-size: 10px;
+    letter-spacing: 5px;
+    opacity: 0.5;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .hall-top h2 {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 2rem;
+    color: var(--parchment);
+    margin-bottom: 8px;
+  }
+
+  .hall-top .room-theme {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: rgba(201,168,76,0.7);
+  }
+
+  .content-block {
+    padding: 0 28px;
+    margin-bottom: 36px;
+    max-width: 800px; /* 新增：限制最大宽度 */
+    margin-left: auto; /* 新增：左侧自动留白，使其居中 */
+    margin-right: auto; /* 新增：右侧自动留白，使其居中 */
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(201,168,76,0.2);
+  }
+
+  .person-card {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+
+  .person-header {
+    padding: 20px 20px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .person-avatar {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--red), var(--crimson));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    flex-shrink: 0;
+    border: 2px solid rgba(201,168,76,0.3);
+  }
+
+  .person-info h3 {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 1.25rem;
+    color: var(--parchment);
+    margin-bottom: 4px;
+  }
+
+  .person-info .role {
+    font-size: 11px;
+    color: var(--gold);
+    opacity: 0.8;
+    letter-spacing: 1px;
+  }
+
+  .person-body {
+    padding: 0 20px 20px;
+    font-size: 13.5px;
+    line-height: 2.0;
+    color: rgba(255, 244, 224, 0.95);
+  }
+
+  .person-body p { margin-bottom: 12px; }
+
+  .highlight-box {
+    background: rgba(139,26,26,0.15);
+    border-left: 3px solid var(--crimson);
+    padding: 14px 16px;
+    margin: 16px 0;
+    font-size: 13px;
+    color: rgba(245,230,200,0.85);
+    line-height: 1.9;
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* ============ TIMELINE ============ */
+  .timeline {
+    padding: 0 28px;
+    position: relative;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 50px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, var(--crimson), rgba(139,26,26,0.2));
+  }
+
+  .tl-item {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 32px;
+    padding-left: 24px;
+    position: relative;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.5s ease;
+  }
+
+  .tl-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .tl-year {
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 700;
+    font-size: 11px;
+    color: var(--gold);
+    min-width: 60px;
+    text-align: right;
+    padding-top: 3px;
+    letter-spacing: 1px;
+  }
+
+  .tl-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--crimson);
+    border: 2px solid var(--gold);
+    flex-shrink: 0;
+    margin-top: 4px;
+    box-shadow: 0 0 8px rgba(192,57,43,0.5);
+  }
+
+  .tl-content {
+    flex: 1;
+    font-size: 13px;
+    line-height: 1.9;
+    color: rgba(245,230,200,0.78);
+  }
+
+  .tl-content strong {
+    color: var(--parchment);
+    font-size: 14px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ============ HONOR GRID SYSTEM (升级版卡片墙) ============ */
+  .honor-list {
+    /* 核心修改 1：改用 Flex 弹性布局，开启换行并强制居中对齐 */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; 
+    gap: 16px;
+    padding: 0 28px;
+    /* 核心修改 2：限制最大宽度，让大屏幕自动变成 3x3 完美方阵，且居中显示 */
+    max-width: 1060px; 
+    margin: 0 auto;
+  }
+
+  .honor-item {
+    /* 核心修改 3：配合 Flex 布局设定宽度伸缩规则。基础280px，最大320px */
+    flex: 1 1 280px; 
+    max-width: 320px; 
+    
+    display: flex;
+    flex-direction: column;
+    padding: 24px 20px;
+    background: rgba(232, 114, 12, 0.04);
+    border: 1px solid rgba(232, 114, 12, 0.15);
+    border-radius: 6px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* 入场动画生效后的状态 */
+  .honor-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* 鼠标悬浮时的光影微动效 */
+  .honor-item.visible:hover {
+    background: rgba(232, 114, 12, 0.08);
+    border-color: rgba(232, 114, 12, 0.4);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  /* 卡片顶部悬浮时出现的亮橙色装饰线 */
+  .honor-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #E8720C, transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .honor-item:hover::before { opacity: 1; }
+
+  /* 充满设计感的背景水印编号 */
+  .honor-num-watermark {
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    font-family: 'Georgia', serif;
+    font-size: 5rem;
+    font-weight: 900;
+    color: rgba(232, 114, 12, 0.08); /* 极度透明，作为背景水印 */
+    line-height: 1;
+    pointer-events: none; /* 不阻挡鼠标交互 */
+    z-index: 0;
+    transition: color 0.3s;
+  }
+  .honor-item:hover .honor-num-watermark {
+    color: rgba(232, 114, 12, 0.15); /* 悬浮时水印微微变亮 */
+  }
+
+  .honor-name {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 1.2rem;
+    color: var(--parchment);
+    margin-bottom: 6px;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .honor-role {
+    font-size: 11.5px;
+    color: rgba(245, 230, 200, 0.65);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1; /* 撑开中间区域，把底部的标签挤下去 */
+    position: relative;
+    z-index: 2;
+  }
+
+  .honor-field {
+    align-self: flex-start; /* 保持标签在左侧不拉伸 */
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 2px;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ============ SCREEN: CLOSING ============ */
+  #s-end {
+    background: linear-gradient(160deg, #110505 0%, #0a0202 100%);
+    padding: 50px 28px 80px;
+    min-height: 100vh;
+    text-align: center;
+  }
+
+  .end-title {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 1.8rem;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .end-sub {
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: rgba(245,230,200,0.45);
+    margin-bottom: 36px;
+  }
+
+  .message-wall {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 32px;
+    text-align: left;
+  }
+
+  .message-wall h3 {
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 16px;
+  }
+
+  .messages-display {
+    min-height: 80px;
+    max-height: 160px;
+    overflow-y: auto;
+    margin-bottom: 16px;
+  }
+
+  .msg-bubble {
+    background: rgba(139,26,26,0.15);
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: rgba(245,230,200,0.75);
+    margin-bottom: 8px;
+    line-height: 1.7;
+    animation: fadeIn 0.3s;
+  }
+
+  .msg-bubble .msg-from {
+    color: var(--gold);
+    font-size: 10px;
+    margin-bottom: 2px;
+    letter-spacing: 1px;
+  }
+
+  .msg-input-row {
+    display: flex;
+    gap: 10px;
+  }
+
+  .msg-input {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 4px;
+    padding: 10px 14px;
+    color: var(--parchment);
+    font-family: 'Noto Serif SC', serif;
+    font-size: 13px;
+    outline: none;
+  }
+
+  .msg-input:focus {
+    border-color: rgba(201,168,76,0.5);
+  }
+
+  .msg-send {
+    background: linear-gradient(135deg, var(--red), var(--deep-red));
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 10px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 13px;
+    transition: all 0.2s;
+  }
+
+  .msg-send:hover {
+    background: linear-gradient(135deg, var(--crimson), var(--red));
+    box-shadow: 0 4px 12px rgba(139,26,26,0.4);
+  }
+
+  .qr-section {
+    margin: 36px auto 0;
+    text-align: center;
+  }
+
+  .qr-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: rgba(201,168,76,0.6);
+    margin-bottom: 16px;
+  }
+
+  #qrcode {
+    display: inline-block;
+    padding: 12px;
+    background: white;
+    border-radius: 4px;
+    border: 3px solid var(--gold);
+  }
+
+  .credits {
+    margin-top: 40px;
+    font-size: 10px;
+    color: rgba(245,230,200,0.3);
+    letter-spacing: 2px;
+    line-height: 2;
+  }
+
+  /* ============ NAV BAR ============ */
+  #nav-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(20, 5, 5, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 215, 0, 0.4);
+    display: none;
+    align-items: center;
+    padding: 12px 20px;
+    gap: 12px;
+    z-index: 1000;
+  }
+
+  #nav-bar.visible { display: flex; }
+
+  .nav-btn {
+    background: transparent;
+    border: 1px solid rgba(201,168,76,0.25);
+    color: rgba(201,168,76,0.7);
+    padding: 8px 16px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    flex: 1;
+  }
+
+  .nav-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(201,168,76,0.08);
+  }
+
+  .nav-title {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(201,168,76,0.5);
+    text-align: center;
+    flex: 2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ============ PROGRESS ============ */
+  #progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--crimson), var(--gold));
+    z-index: 999;
+    transition: width 0.4s;
+  }
+
+  /* ============ ANIMATIONS ============ */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes expandWidth {
+    from { width: 0; opacity: 0; }
+    to { width: 80px; opacity: 1; }
+  }
+
+  @keyframes breathe {
+    0%, 100% { box-shadow: 0 0 0px rgba(201,168,76,0); }
+    50% { box-shadow: 0 0 16px rgba(201,168,76,0.35); }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
+  /* ============ QUOTE STYLE ============ */
+  .quote-block {
+    margin: 20px 0;
+    padding: 16px 20px;
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 4px;
+    position: relative;
+    background: rgba(0,0,0,0.15);
+  }
+
+  .quote-block::before {
+    content: '"';
+    font-size: 3rem;
+    color: var(--gold);
+    opacity: 0.2;
+    position: absolute;
+    top: -10px; left: 12px;
+    font-family: Georgia, serif;
+    line-height: 1;
+  }
+
+  .quote-block p {
+    font-size: 14px;
+    color: rgba(245,230,200,0.8);
+    line-height: 2;
+    font-style: italic;
+  }
+
+  .quote-block .quote-from {
+    font-size: 11px;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-top: 8px;
+    text-align: right;
+    letter-spacing: 2px;
+  }
+
+  /* Art card for hall 3 */
+  .art-card {
+    background: linear-gradient(135deg, rgba(201,168,76,0.05), rgba(201,168,76,0.02));
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .art-card-title {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 1.1rem;
+    color: var(--parchment);
+    margin-bottom: 6px;
+  }
+
+  .art-card-subtitle {
+    font-size: 11px;
+    color: var(--gold);
+    opacity: 0.7;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+  }
+
+  .art-card p {
+    font-size: 13px;
+    color: rgba(245,230,200,0.75);
+    line-height: 2;
+  }
+
+  /* Achievement badge */
+  .badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0;
+  }
+
+  .badge {
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    border: 1px solid;
+  }
+
+  .badge-red { color: #ff8080; border-color: rgba(255,128,128,0.3); background: rgba(139,26,26,0.15); }
+  .badge-gold { color: var(--bright-gold); border-color: rgba(240,192,64,0.3); background: rgba(201,168,76,0.1); }
+  .badge-blue { color: #80c0ff; border-color: rgba(128,192,255,0.3); background: rgba(13,27,42,0.4); }
+
+  /* Visual divider */
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    opacity: 0.3;
+    font-size: 1.2rem;
+    margin: 24px 0;
+    letter-spacing: 12px;
+  }
+
+  /* stats row */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+  }
+
+  .stat-box {
+    text-align: center;
+    padding: 16px 8px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 4px;
+  }
+
+  .stat-num {
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: var(--gold);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    color: rgba(245,230,200,0.5);
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  /* ============ MULTIMEDIA & IMAGE SYSTEM ============ */
+  /* 人物真实头像样式 */
+  .img-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    /* 核心调色：添加做旧泛黄效果，稍微提升对比度，降低亮度融入暗背景 */
+    filter: sepia(0.5) contrast(1.15) brightness(0.85);
+    transition: all 0.4s ease;
+  }
+
+  /* 鼠标悬浮时恢复一定的真实色彩并微微放大 */
+  .person-avatar:hover .img-avatar {
+    filter: sepia(0.1) contrast(1.1) brightness(1);
+    transform: scale(1.08);
+  }
+
+  /* 历史影像容器 */
+  .media-container {
+    margin: 20px 0;
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    background: #000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  }
+
+  .history-media {
+    width: 100%;
+    height: auto;
+    display: block;
+    /* 老照片/老视频统一黑白化处理，增加对比度 */
+    filter: grayscale(100%) contrast(1.2) brightness(0.9);
+    opacity: 0.85; 
+    transition: opacity 0.3s;
+  }
+
+  .history-media:hover {
+    opacity: 1;
+  }
+
+  .media-caption {
+    font-size: 11px;
+    color: rgba(245,230,200,0.6);
+    text-align: center;
+    padding: 10px 14px;
+    background: linear-gradient(180deg, transparent, rgba(10,2,2,0.9));
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    letter-spacing: 1.5px;
+  }
+
+  /* 语音导览按钮 */
+  .audio-guide-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(139,26,26,0.15);
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--gold);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+  }
+
+  .audio-guide-btn:hover {
+    background: rgba(139,26,26,0.3);
+    border-color: var(--bright-gold);
+  }
+
+  /* ============ PHOTO GALLERY SYSTEM ============ */
+  .photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 两列网格布局 */
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .gallery-item {
+    position: relative;
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--dark);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    cursor: pointer;
+  }
+
+  /* 1. 修改主图容器：去掉固定高度，改用比例 */
+  .gallery-item.main-photo {
+    grid-column: span 2;
+    aspect-ratio: 21 / 9; /* 采用电影宽屏比例，高度会随宽度等比缩放 */
+    /* 如果觉得 PC 端还是太扁，也可以改成 aspect-ratio: 16 / 7; */
+  }
+
+  /* 2. 修改副图容器：去掉固定高度，改用比例 */
+  .gallery-item.sub-photo {
+    aspect-ratio: 3 / 2; /* 采用经典相机的 3:2 比例，展示更完整 */
+  }
+
+  /* 3. 优化图片标签：增加 object-position 控制裁剪重心 */
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* 新增这一行：核心修正点！让浏览器在裁剪时，优先保留偏上方 20% 的位置（通常是人脸），而不是默认的绝对居中 */
+    object-position: center 20%; 
+    display: block;
+    filter: sepia(0.5) grayscale(0.4) contrast(1.1) brightness(0.9);
+    transition: transform 0.5s ease, filter 0.5s ease;
+  }
+
+  /* 鼠标悬浮时：图片放大并恢复色彩 */
+  .gallery-item:hover img {
+    transform: scale(1.05);
+    filter: sepia(0.1) grayscale(0) contrast(1.1) brightness(1);
+  }
+
+  /* 悬浮字幕遮罩层 */
+  .gallery-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(0deg, rgba(10,2,2,0.95) 0%, rgba(10,2,2,0.8) 60%, transparent 100%);
+    color: var(--gold);
+    font-size: 11px;
+    padding: 20px 12px 10px;
+    text-align: center;
+    letter-spacing: 1px;
+    /* 默认隐藏在底部，悬浮时升起 */
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  .gallery-item:hover .gallery-caption {
+    transform: translateY(0);
+  }
+
+  /* ============ VIDEO OVERLAY SYSTEM ============ */
+  .video-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(10,2,2,0.65); /* 半透明黑底，压暗画面 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0; /* 默认隐藏 */
+    pointer-events: none; /* 隐藏时不可点击，不挡视频 */
+    transition: opacity 0.4s ease;
+  }
+
+  /* 触发显示时的类名 */
+  .video-overlay.show {
+    opacity: 1;
+    pointer-events: auto; /* 显示时允许点击 */
+  }
+
+  .play-icon {
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    background: rgba(139,26,26,0.6);
+    padding: 10px 24px;
+    border-radius: 4px;
+    font-size: 12px;
+    letter-spacing: 3px;
+    cursor: pointer;
+    backdrop-filter: blur(2px);
+    transition: all 0.3s;
+  }
+
+  .play-icon:hover {
+    background: rgba(139,26,26,0.9);
+    box-shadow: 0 0 15px rgba(201,168,76,0.3);
+    transform: scale(1.05);
+  }
+
+  /* ============ 移动端专属优化 ============ */
+  @media screen and (max-width: 768px) {
+    /* 1. 手机端屏幕窄，让主图稍微高一点点，防止画面太扁 */
+    .gallery-item.main-photo {
+      aspect-ratio: 16 / 9; 
+    }
+
+    /* 2. 手机端副图较小，稍微缩小字幕的字体和内边距，防止文字溢出 */
+    .gallery-caption {
+      font-size: 10px;
+      padding: 12px 8px 6px;
+      letter-spacing: 0.5px;
+    }
+
+    /* 3. （可选）如果你希望手机端副图不要并排，而是上下排列，可以取消注释下面这两行 */
+    /*
+    .photo-gallery { grid-template-columns: 1fr; }
+    .gallery-item.main-photo { grid-column: span 1; }
+    */
+  }
+
+/* ============ ENHANCED BUSINESS FLOW SYSTEM ============ */
+  /* 商业模式图容器 */
+  .business-flow-container {
+    margin-top: 24px;
+    padding: 20px;
+    background: rgba(7,16,21,0.6); 
+    border-radius: 6px;
+    border: 1px solid rgba(128,192,255,0.15);
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+  }
+
+  /* 主流程网格结构 (PC端采用横向) */
+  .business-flow {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    position: relative;
+    padding: 10px 0;
+  }
+
+  /* 流程节点样式 */
+  .flow-node {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+  }
+
+  /* 节点图标背景 (蓝色呼吸灯光效) */
+  .node-icon-wrapper {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(13,27,42,0.8);
+    border: 1px solid rgba(128,192,255,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 12px;
+    box-shadow: 0 0 10px rgba(128,192,255,0.1);
+    transition: all 0.3s;
+    /* 核心动画：蓝色呼吸 */
+    animation: blue-pulse 2.5s infinite; 
+  }
+
+  .flow-node:hover .node-icon-wrapper {
+    transform: translateY(-3px) scale(1.05);
+    border-color: #80c0ff;
+    box-shadow: 0 0 20px rgba(128,192,255,0.4);
+    animation: none; /* 悬浮时停止呼吸 */
+  }
+
+  /* 节点标题 */
+  .node-label {
+    font-size: 11px;
+    color: #80c0ff;
+    letter-spacing: 2px;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+
+  /* 节点简短描述 (更为淋漓尽致的关键) */
+  .node-desc {
+    font-size: 10px;
+    color: rgba(245,230,200,0.6);
+    line-height: 1.6;
+    max-width: 90px; /* 限制宽度防止文字挤在一起 */
+  }
+
+  /* 节点之间的连接箭头 */
+  .flow-arrow {
+    font-size: 18px;
+    color: rgba(128,192,255,0.3);
+    margin-top: 16px; /* 居中于图标之间 */
+    align-self: flex-start;
+  }
+
+  /* ============ 移动端专属媒体查询 ============ */
+  @media screen and (max-width: 768px) {
+    /* 手机端商业模式改为纵向排版，确保清晰度 */
+    .business-flow {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .flow-node {
+      flex-direction: row; /* 图标左，文字右 */
+      width: 100%;
+      text-align: left;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .node-icon-wrapper {
+      width: 44px; height: 44px;
+      font-size: 18px;
+      margin-bottom: 0;
+    }
+
+    .node-desc {
+      max-width: none; /* 移动端不限制宽度 */
+    }
+
+    /* 纵向布局下将箭头调整为向下 */
+    .flow-arrow {
+      transform: rotate(90deg);
+      margin-top: 0;
+      margin-bottom: 10px;
+      margin-left: -50px; /* 稍微偏向左侧与图标对齐 */
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="particles"></div>
+<div id="progress"></div>
+
+<div id="app">
+
+  <!-- ====== SCREEN 1: COVER ====== -->
+  <div class="screen active" id="s1">
+    <div class="seal">巾帼<br>纪实</div>
+    <div class="cover-badge">数字人文 · 线上主题展览</div>
+    <div class="cover-title-zh">波澜壮阔<br>半边天</div>
+    <div class="cover-subtitle">改革开放以来山西女性纪实展</div>
+    <div class="cover-line"></div>
+    <div class="cover-desc">从1978年的春风化雨到新时代的阔步前行<br>无数三晋女儿将个人命运融入宏大时代</div>
+    <button class="btn-enter" onclick="goTo('s2')">
+      <span>▶</span>
+      <span>点击进入展馆</span>
+    </button>
+    <div class="cover-year-range">1978 — 2026</div>
+  </div>
+
+  <!-- ====== SCREEN 2: FOREWORD ====== -->
+  <div class="screen" id="s2">
+    <div class="hall-screen" style="background: linear-gradient(160deg, #100505 0%, #0a0202 100%); padding: 70px 32px 100px;">
+      <div class="foreword-label">序厅 · FOREWORD</div>
+      <div class="foreword-title">策展前言</div>
+      <div class="foreword-text">
+        <p id="fw-text"></p>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-box">
+          <span class="stat-num">48</span>
+          <div class="stat-label">年改革历程</div>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num">4</span>
+          <div class="stat-label">大主题展厅</div>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num">15</span>
+          <div class="stat-label">位三晋女性</div>
+        </div>
+      </div>
+
+      <div style="margin-top:48px; text-align:center;">
+        <button class="btn-enter" onclick="goTo('s3')">进入导览大厅 →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== SCREEN 3: NAVIGATION HALL ====== -->
+  <div class="screen" id="s3">
+    <div class="hall-screen" style="background: linear-gradient(180deg, #0a0202 0%, #110505 100%); padding: 50px 24px 100px;">
+      <div class="hall-header">
+        <span class="label">导览大厅 · NAVIGATION HALL</span>
+        <h2>请选择展厅</h2>
+        <div class="hall-divider"></div>
+        <p style="font-size:12px; color: rgba(245,230,200,0.45); letter-spacing:1px;">触碰展厅拱门，开启探索之旅</p>
+      </div>
+
+      <div class="pavilion-grid">
+        <div class="pavilion-card" onclick="goTo('s4')">
+          <span class="pavilion-icon">⚖️</span>
+          <div class="pavilion-num">第一展厅</div>
+          <div class="pavilion-name">破冰与<br>奠基</div>
+          <div class="pavilion-sub">制度先锋 · 申纪兰</div>
+        </div>
+        <div class="pavilion-card" onclick="goTo('s5')">
+          <span class="pavilion-icon">🔬</span>
+          <div class="pavilion-num">第二展厅</div>
+          <div class="pavilion-name">转型与<br>突围</div>
+          <div class="pavilion-sub">科创女性 · 晋商精神</div>
+        </div>
+        <div class="pavilion-card" onclick="goTo('s6')">
+          <span class="pavilion-icon">✂️</span>
+          <div class="pavilion-num">第三展厅</div>
+          <div class="pavilion-name">传承与<br>重塑</div>
+          <div class="pavilion-sub">非遗文化 · 艺术守望</div>
+        </div>
+        <div class="pavilion-card" onclick="goTo('s7')">
+          <span class="pavilion-icon">🌾</span>
+          <div class="pavilion-num">第四展厅</div>
+          <div class="pavilion-name">扎根与<br>芳华</div>
+          <div class="pavilion-sub">乡村振兴 · 巾帼力量</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 40px; text-align:center;">
+        <div style="font-size:11px; color: rgba(201,168,76,0.4); letter-spacing:3px;">· 或 · 按顺序浏览 ·</div>
+        <button class="btn-enter" style="margin-top:16px;" onclick="goTo('s4')">从头开始游览 →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== SCREEN 4: HALL 1 - 申纪兰 ====== -->
+  <div class="screen" id="s4">
+    <div class="hall-screen hall-bg-1">
+      <div class="hall-top">
+        <div class="room-num">第一展厅 · HALL ONE</div>
+        <h2>破冰与奠基</h2>
+        <div class="room-theme">制度先锋 · 时代坐标</div>
+      </div>
+
+      <div class="content-block">
+        <div class="section-label">核心人物</div>
+        <div class="person-card">
+          <div class="person-header">
+            <div class="person-avatar" style="padding: 2px;">
+              <img src="media/shen-jilan-avatar.jpg" alt="申纪兰" class="img-avatar">
+            </div>
+            <div class="person-info">
+              <h3>申纪兰</h3>
+              <div class="role">全国劳动模范 · 共和国勋章获得者</div>
+              <div class="role" style="margin-top:2px; color:rgba(245,230,200,0.5);">平顺县西沟村 · 1929—2020</div>
+            </div>
+          </div>
+          <div class="person-body">
+            <p>申纪兰的生命史，几乎是中国农村妇女解放运动与农村经济体制演进的微缩模型。她的一生横跨新中国建立、改革开放、脱贫攻坚与生态文明建设四个历史阶段，用实际行动诠释了"劳动最光荣"的真理。</p>
+            
+            <div class="media-container">
+              <div style="position: relative;">
+                <video id="video-shen" src="media/shen-jilan-working.mp4" autoplay muted playsinline class="history-media"></video>
+                
+                <div class="video-overlay" id="overlay-shen" onclick="replayVideo('video-shen', 'overlay-shen')">
+                  <div class="play-icon">▶ 重播影像</div>
+                </div>
+              </div>
+              
+              <div class="media-caption">《功勋》：申纪兰带领西沟村妇女参与农业生产</div>
+            </div>
+
+            <div class="highlight-box">
+              她是唯一一位连任第一届至第十三届全国人民代表大会代表的历史人物
+            </div>
+            <div class="badge-row">
+              <span class="badge badge-red">全国劳动模范</span>
+              <span class="badge badge-gold">共和国勋章</span>
+              <span class="badge badge-blue">十三届全国人大代表</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <div class="section-label">历史时光轴</div>
+      </div>
+
+      <div class="timeline" id="tl1">
+        <div class="tl-item" data-delay="0">
+          <div class="tl-year">1951<br>—<br>1954</div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <strong>发动妇女，争取同工同酬</strong>
+            面对"好女不出院"的封建旧训，申纪兰挨家挨户动员妇女走出家门参与集体生产。她带领妇女与男社员展开"劳动竞赛"，以实际产出证明女性劳动价值，争取到"男女干一样的活，记一样的工分"的历史性制度安排。
+          </div>
+        </div>
+        <div class="tl-item" data-delay="150">
+          <div class="tl-year">1954</div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <strong>宪法写入男女同工同酬</strong>
+            在第一届全国人民代表大会上，申纪兰正式提出"男女同工同酬"倡议。该原则被历史性地写入中华人民共和国第一部《宪法》，从根本上确立了新中国妇女的劳动权利。
+          </div>
+        </div>
+        <div class="tl-item" data-delay="300">
+          <div class="tl-year">1984<br>—<br>1985</div>
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <strong>推行改革，创办乡镇企业</strong>
+            家庭联产承包责任制推行后，申纪兰大胆探索"统一经营与分散经营"相结合的"双层经营"新路径。她带领西沟人利用本地硅矿资源建成铁合金厂，随后又拓展至磁钢厂、石料厂等，极大推动了老区经济建设。
+          </div>
+        </div>
+        <div class="tl-item" data-delay="450">
+          <div class="tl-year">2012<br>至今</div>
+          <div class="tl-dot" style="background: #2ecc71; border-color: #2ecc71;"></div>
+          <div class="tl-content" style="color: rgba(180,240,200,0.85);">
+            <strong>拆除污染，转向绿色发展</strong>
+            年逾八旬的申纪兰毅然决定拆除不符合环保标准的铁合金厂，带领村民转向红色与绿色生态旅游，探索出"党支部＋合作社＋基地＋农光互补＋贫困户"的现代产业扶贫新模式，践行"绿水青山就是金山银山"理念。
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block" style="margin-top: 36px;">
+        <div class="section-label">岁月印记 · 珍贵影像</div>
+        
+        <div class="photo-gallery">
+          <div class="gallery-item main-photo">
+            <img src="media/gallery-shen-1.jpg" alt="1954年第一届全国人大">
+            <div class="gallery-caption">1954年，出席第一届全国人民代表大会</div>
+          </div>
+          
+          <div class="gallery-item sub-photo">
+            <img src="media/gallery-shen-2.jpg" alt="共同劳动">
+            <div class="gallery-caption">申纪兰带领妇女们劳动</div>
+          </div>
+          
+          <div class="gallery-item sub-photo">
+            <img src="media/gallery-shen-3.jpg" alt="团拜会激情发言">
+            <div class="gallery-caption">申纪兰在1953年西沟村团拜会上发言</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block" style="margin-top: 32px;">
+        <div class="quote-block">
+          <p>勿忘人民、勿忘劳动。劳动是人生最高贵的事情，也是最有价值的事情。</p>
+          <div class="quote-from">——申纪兰</div>
+        </div>
+      </div>
+
+      <div style="text-align:center; padding: 0 28px;">
+        <button class="btn-enter" onclick="goTo('s5')">前往第二展厅 →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== SCREEN 5: HALL 2 - 经济转型 ====== -->
+  <div class="screen" id="s5">
+    <div class="hall-screen hall-bg-2">
+      <div class="hall-top" style="border-bottom-color: rgba(128,192,255,0.15);">
+        <div class="room-num" style="color: #80c0ff;">第二展厅 · HALL TWO</div>
+        <h2>转型与突围</h2>
+        <div class="room-theme" style="color: rgba(128,192,255,0.7);">科创前沿 · 晋商精神的当代延展</div>
+      </div>
+
+      <div class="content-block">
+        <div class="section-label" style="color: #80c0ff;">焦点人物一</div>
+        <div class="person-card" style="border-color: rgba(128,192,255,0.15); background: rgba(13,27,42,0.4);">
+          <div class="person-header">
+            <div class="person-avatar" style="padding: 2px; border-color: rgba(128,192,255,0.3); background: transparent;">
+              <img src="media/yangxia-avatar.jpg" alt="杨霞" class="img-avatar" style="filter: sepia(0.2) contrast(1.1) brightness(0.9);">
+            </div>
+            <div class="person-info">
+              <h3>杨 霞</h3>
+              <div class="role" style="color: #80c0ff;">山西锦波生物医药股份有限公司 创始人兼董事长</div>
+            </div>
+          </div>
+          
+          <div class="person-body">
+            <p>杨霞拥有硕士研究生学历及高级工程师职称，曾长期在山西医科大学担任讲师，致力于学术研究。2008年，她敏锐捕捉到生物科技领域的产业化前景，毅然创办了锦波生物。</p>
+            
+            <div class="media-container" style="border-color: rgba(128,192,255,0.25); box-shadow: 0 4px 15px rgba(13,27,42,0.8);">
+              <div style="position: relative;">
+                <video id="video-yang" src="media/yangxia-lab.mp4" autoplay muted playsinline class="history-media"></video>
+                
+                <div class="video-overlay" id="overlay-yang" onclick="replayVideo('video-yang', 'overlay-yang')">
+                  <div class="play-icon" style="border-color: #80c0ff; color: #80c0ff; background: rgba(13,27,42,0.8); box-shadow: 0 0 10px rgba(128,192,255,0.2);">▶ 重播影像</div>
+                </div>
+              </div>
+              <div class="media-caption" style="background: linear-gradient(180deg, transparent, rgba(7,16,21,0.95)); color: rgba(128,192,255,0.7);">科研前沿：重组Ⅲ型人源化胶原蛋白研发纪实</div>
+            </div>
+
+            <div class="highlight-box" style="border-color: #80c0ff; background: rgba(13,27,42,0.4);">
+              在她的带领下，企业主导了<strong style="color:#80c0ff;">国际首个重组Ⅲ型人源化胶原蛋白冻干纤维产品</strong>的上市，打破了相关领域的技术壁垒，成为山西省从传统资源依赖型经济向高新技术与大健康产业转型的成功缩影。
+            </div>
+            <div class="badge-row">
+              <span class="badge badge-gold">全国三八红旗手</span>
+              <span class="badge badge-blue">新兴产业领军人才</span>
+              <span class="badge" style="color:#a0ffa0; border-color:rgba(160,255,160,0.3); background:rgba(30,86,49,0.2);">杰出青年创业奖</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <div class="section-label" style="color: #80c0ff;">晋商精神 · 当代脉络</div>
+        <div style="font-size:13.5px; line-height:2; color:rgba(245,230,200,0.75);">
+          改革开放后，随着市场经济体制的建立与完善，山西涌现出一批优秀女企业家。她们不仅在传统的煤炭、醋产业中稳扎稳打，更在文化旅游与高科技特色产业中开疆拓土，展现了新时代晋商精神的女性风采。
+        </div>
+        <div class="ornament" style="color: #80c0ff;">✦ ✦ ✦</div>
+      </div>
+
+      <div class="content-block">
+        <div class="section-label" style="color: #80c0ff;">焦点人物二</div>
+        <div class="art-card" style="border-color: rgba(128,192,255,0.15); background: rgba(13,27,42,0.3);">
+          
+          <div class="person-header" style="margin-bottom: 20px;">
+            <div class="person-avatar" style="padding: 2px; border-color: rgba(128,192,255,0.3); background: transparent;">
+              <img src="media/weihongyu-avatar.jpg" alt="卫红宇" class="img-avatar" style="filter: sepia(0.2) contrast(1.1) brightness(0.9);">
+            </div>
+            <div class="person-info">
+              <h3>卫红宇</h3>
+              <div class="role" style="color:#80c0ff;">全国巾帼建功标兵 · 山阴县新大滩村村委会主任</div>
+            </div>
+          </div>
+
+          <div style="margin: 16px 0; border-radius: 4px; overflow: hidden; border: 1px solid rgba(128,192,255,0.15);">
+            <img src="media/weihongyu-coop.jpg" alt="手工编织合作社" style="width: 100%; display: block; object-fit: cover; aspect-ratio: 16/9; filter: sepia(0.2) grayscale(0.2) contrast(1.1) brightness(0.9);">
+          </div>
+
+          <p>面对如何让村民不出门也能增收的难题，卫红宇通过外出取经，在村里创办了以手工编织为主的专业合作社与香包加工基地。她引入现代商业思维，与电商平台签订销售合同，极大拓宽了产品销路，带领乡亲们走上富足之路。</p>
+          
+          <div class="business-flow-container">
+            <div class="section-label" style="color: #80c0ff; font-size: 11px; margin-bottom: 15px; letter-spacing: 3px;">当代晋商·女性致富闭环模式</div>
+
+            <div class="business-flow">
+              <div class="flow-node">
+                <div class="node-icon-wrapper">🌐</div>
+                <div class="node-label">网络平台</div>
+                <div class="node-desc">精准对接市场需求<br>拓宽香包等销路</div>
+              </div>
+
+              <div class="flow-arrow">➡️</div>
+
+              <div class="flow-node">
+                <div class="node-icon-wrapper">🤝</div>
+                <div class="node-label">合作社统筹</div>
+                <div class="node-desc">组织村民·整合资源<br>引入现代商业思维</div>
+              </div>
+
+              <div class="flow-arrow">➡️</div>
+
+              <div class="flow-node">
+                <div class="node-icon-wrapper">🏭</div>
+                <div class="node-label">加工基地</div>
+                <div class="node-desc">标准化生产工艺<br>确保产品质量</div>
+              </div>
+
+              <div class="flow-arrow">➡️</div>
+
+              <div class="flow-node">
+                <div class="node-icon-wrapper">👩‍👩‍👧</div>
+                <div class="node-label">农户增收</div>
+                <div class="node-desc">实现不出门也增收<br>带领乡亲致富</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <div style="text-align:center; padding: 0 28px;">
+        <button class="btn-enter" style="border-color: #80c0ff; color: #80c0ff;" onclick="goTo('s6')">前往第三展厅 →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- ====== SCREEN 6: HALL 3 - 文化传承 ====== -->
+  <div class="screen" id="s6">
+    <div class="hall-screen hall-bg-3">
+      <div class="hall-top" style="border-bottom-color: rgba(240,192,64,0.15);">
+        <div class="room-num" style="color: var(--bright-gold);">第三展厅 · HALL THREE</div>
+        <h2>传承与重塑</h2>
+        <div class="room-theme" style="color: rgba(240,192,64,0.7);">非遗新生 · 文学艺术的守望者</div>
+      </div>
+
+      <div class="content-block">
+        <div class="section-label">非遗传承</div>
+        <div class="person-card" style="border-color: rgba(240,192,64,0.2); background: rgba(201,168,76,0.04);">
+          <div class="person-header">
+            <div class="person-avatar" style="padding: 2px; border-color: rgba(240,192,64,0.4); background: transparent;">
+              <img src="media/guomeihua-avatar.jpg" alt="郭梅花" class="img-avatar" style="filter: sepia(0.3) contrast(1.1) brightness(0.9);">
+            </div>
+            <div class="person-info">
+              <h3>郭梅花</h3>
+              <div class="role" style="color: var(--bright-gold);">山西省民间剪纸艺术家协会会长</div>
+            </div>
+          </div>
+          
+          <div class="person-body">
+            <p>郭梅花自幼受太姥姥熏陶，对剪纸艺术产生浓厚兴趣，随后又系统学习了国画、油画与版画，深厚的美术功底为其剪纸创作注入了强大的张力与粗犷美。</p>
+            
+            <div class="media-container" style="border-color: rgba(240,192,64,0.3); box-shadow: 0 4px 15px rgba(26,20,5,0.8);">
+              <img src="media/guomeihua-art.jpg" alt="郭梅花现代剪纸文创作品" class="history-media" style="filter: sepia(0.1) contrast(1.15) brightness(0.9);">
+              <div class="media-caption" style="background: linear-gradient(180deg, transparent, rgba(26,20,5,0.95)); color: var(--bright-gold);">非遗新生：将传统剪纸艺术融入现代文创</div>
+            </div>
+
+            <div class="highlight-box" style="border-color: var(--gold);">
+              面对非遗技艺在现代社会边缘化的困境，郭梅花提出<strong style="color:var(--bright-gold);">"非遗需要破圈，也需要新生"</strong>的理念——她将剪纸纹样融入丝巾、抱枕等日常用品，开辟传统文化商业化运作的新路径。
+            </div>
+            
+            <div style="margin-top:20px; padding: 16px; background: rgba(10,5,2,0.4); border-radius: 4px; border: 1px solid rgba(240,192,64,0.1);">
+              <div style="font-size:11px; color:var(--bright-gold); letter-spacing:3px; margin-bottom:12px; text-align: center;">传统纹样 · 人生四大喜</div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:12px;">
+                <div style="background:var(--red); border:1px dashed var(--bright-gold); color:var(--bright-gold); padding:10px 0; border-radius:3px; text-align:center; letter-spacing: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.5);">久旱逢甘霖</div>
+                <div style="background:var(--red); border:1px dashed var(--bright-gold); color:var(--bright-gold); padding:10px 0; border-radius:3px; text-align:center; letter-spacing: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.5);">他乡遇故知</div>
+                <div style="background:var(--red); border:1px dashed var(--bright-gold); color:var(--bright-gold); padding:10px 0; border-radius:3px; text-align:center; letter-spacing: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.5);">洞房花烛夜</div>
+                <div style="background:var(--red); border:1px dashed var(--bright-gold); color:var(--bright-gold); padding:10px 0; border-radius:3px; text-align:center; letter-spacing: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.5);">金榜题名时</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <div class="section-label">文学与戏曲</div>
+        
+        <div class="art-card" style="border-color: rgba(240,192,64,0.15); background: rgba(201,168,76,0.02);">
+          <div class="person-header" style="padding: 0 0 16px 0;">
+            <div class="person-avatar" style="width: 44px; height: 44px; padding: 2px; border-color: rgba(240,192,64,0.3); background: transparent;">
+              <img src="media/geshuiping-avatar.jpg" alt="葛水平" class="img-avatar" style="filter: sepia(0.3) contrast(1.1) brightness(0.9);">
+            </div>
+            <div class="person-info">
+              <h3 style="font-size: 1.1rem;">葛水平</h3>
+              <div class="role" style="color: var(--bright-gold);">当代优秀女作家 · 鲁迅文学奖得主</div>
+            </div>
+          </div>
+          <p>葛水平以对太行山乡土社会的深刻体察，创作出《甩鞭》《喊山》等震撼人心的作品。其中小说《喊山》荣获第四届鲁迅文学奖全国优秀中篇小说奖，极大丰富了当代中国文坛的山西叙事。</p>
+        </div>
+
+        <div class="art-card" style="margin-top:20px; border-color: rgba(240,192,64,0.15); background: rgba(201,168,76,0.02);">
+          <div class="person-header" style="padding: 0 0 16px 0;">
+            <div class="person-avatar" style="width: 44px; height: 44px; padding: 2px; border-color: rgba(240,192,64,0.3); background: transparent;">
+              <img src="media/xietao-avatar.jpg" alt="谢涛" class="img-avatar" style="filter: sepia(0.3) contrast(1.1) brightness(0.9);">
+            </div>
+            <div class="person-info">
+              <h3 style="font-size: 1.1rem;">谢 涛</h3>
+              <div class="role" style="color: var(--bright-gold);">晋剧第一女老生 · 戏剧梅花奖得主</div>
+            </div>
+          </div>
+          <p>谢涛以天命之年依然保持每年惊人场次的下乡演出毅力，扎根基层，将晋剧艺术传递到乡村角落。她精湛的表演艺术两度斩获上海白玉兰戏剧表演艺术奖主角奖，展现了文化守望者对艺术的纯粹信仰。</p>
+          
+          <div class="media-container" style="border-color: rgba(240,192,64,0.25); box-shadow: 0 4px 15px rgba(26,20,5,0.8); margin: 16px 0;">
+            <div style="position: relative;">
+              <video id="video-xie" src="media/xietao-opera.mp4" autoplay muted playsinline class="history-media"></video>
+              
+              <div class="video-overlay" id="overlay-xie" onclick="replayVideo('video-xie', 'overlay-xie')">
+                <div class="play-icon" style="border-color: var(--bright-gold); color: var(--bright-gold); background: rgba(26,20,5,0.8); box-shadow: 0 0 10px rgba(240,192,64,0.2);">▶ 聆听名段</div>
+              </div>
+            </div>
+            <div class="media-caption" style="background: linear-gradient(180deg, transparent, rgba(26,20,5,0.95)); color: var(--bright-gold);">晋剧经典唱段回顾</div>
+          </div>
+
+          <div style="margin-top:16px; text-align:center; padding:12px; background:rgba(240,192,64,0.05); border: 1px solid rgba(240,192,64,0.15); border-radius:4px;">
+            <div style="font-size:10px; letter-spacing:3px; color:rgba(245,230,200,0.6); margin-bottom:6px;">年均下乡演出</div>
+            <div style="font-family:'Ma Shan Zheng', cursive; font-size:2.5rem; color:var(--bright-gold); text-shadow: 0 2px 10px rgba(240,192,64,0.3);">200<span style="font-size:1rem; text-shadow: none;"> 场+</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center; padding: 0 28px;">
+        <button class="btn-enter" onclick="goTo('s7')">前往第四展厅 →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== SCREEN 7: HALL 4 - 基层力量 ====== -->
+  <div class="screen" id="s7">
+    <div class="hall-screen hall-bg-4">
+      <div class="hall-top" style="border-bottom-color: rgba(232,114,12,0.2);">
+        <div class="room-num" style="color: #E8720C;">第四展厅 · HALL FOUR</div>
+        <h2>扎根与芳华</h2>
+        <div class="room-theme" style="color: rgba(232,114,12,0.8);">基层巾帼 · 群星闪耀的"她"力量</div>
+      </div>
+
+      <div class="content-block">
+        <div style="font-size:13.5px; line-height:2; color:rgba(245,230,200,0.75); margin-bottom:20px;">
+          时代的发展不仅依赖于顶层设计的突破，更离不开千千万万在脱贫攻坚、乡村振兴与基层治理第一线默默奉献的普通女性与基层干部。
+        </div>
+        <div class="section-label" style="color: #E8720C;">近些年全国三八红旗手（山西省）</div>
+      </div>
+
+      <div class="honor-list" id="honor-list">
+        <div class="honor-item" data-delay="0">
+          <div class="honor-num-watermark">01</div>
+          <div class="honor-name">蒋 梅</div>
+          <div class="honor-role">山西广播电视台交通广播节目中心主任</div>
+          <span class="honor-field" style="color:#E8720C; border-color:rgba(232,114,12,0.3); background:rgba(232,114,12,0.1);">传媒公益</span>
+        </div>
+        
+        <div class="honor-item" data-delay="80">
+          <div class="honor-num-watermark">02</div>
+          <div class="honor-name">赵 敏</div>
+          <div class="honor-role">山西省大同市公安局经开区分局副局长</div>
+          <span class="honor-field" style="color:#E8720C; border-color:rgba(232,114,12,0.3); background:rgba(232,114,12,0.1);">公安法治</span>
+        </div>
+        
+        <div class="honor-item" data-delay="160">
+          <div class="honor-num-watermark">03</div>
+          <div class="honor-name">张文玲</div>
+          <div class="honor-role">山西省朔州爱心家政服务有限公司董事长</div>
+          <span class="honor-field" style="color:#E8720C; border-color:rgba(232,114,12,0.3); background:rgba(232,114,12,0.1);">民生服务</span>
+        </div>
+        
+        <div class="honor-item" data-delay="240">
+          <div class="honor-num-watermark">04</div>
+          <div class="honor-name">侯丽娟</div>
+          <div class="honor-role">华阳新材料科技集团二矿通风工区工人</div>
+          <span class="honor-field" style="color:#E8720C; border-color:rgba(232,114,12,0.3); background:rgba(232,114,12,0.1);">能源产业</span>
+        </div>
+        
+        <div class="honor-item" data-delay="320">
+          <div class="honor-num-watermark">05</div>
+          <div class="honor-name">李翠英</div>
+          <div class="honor-role">山西省吕梁市久久爱心公益协会副会长</div>
+          <span class="honor-field" style="color:#E8720C; border-color:rgba(232,114,12,0.3); background:rgba(232,114,12,0.1);">社会公益</span>
+        </div>
+        
+        <div class="honor-item" data-delay="400">
+          <div class="honor-num-watermark">06</div>
+          <div class="honor-name">柴慧萍</div>
+          <div class="honor-role">山西省晋城市中医医院副院长</div>
+          <span class="honor-field" style="color:#E8720C; border-color:rgba(232,114,12,0.3); background:rgba(232,114,12,0.1);">医疗卫生</span>
+        </div>
+        
+        <div class="honor-item" data-delay="480">
+          <div class="honor-num-watermark">07</div>
+          <div class="honor-name">周灵梅</div>
+          <div class="honor-role">山西省运城市人民路学校党支部书记、校长</div>
+          <span class="honor-field" style="color:#E8720C; border-color:rgba(232,114,12,0.3); background:rgba(232,114,12,0.1);">基础教育</span>
+        </div>
+        
+        <div class="honor-item" data-delay="560">
+          <div class="honor-num-watermark">08</div>
+          <div class="honor-name">秦雪梅</div>
+          <div class="honor-role">山西大学中医药现代研究中心主任</div>
+          <span class="honor-field" style="color:#E8720C; border-color:rgba(232,114,12,0.3); background:rgba(232,114,12,0.1);">科研创新</span>
+        </div>
+        
+        <div class="honor-item" data-delay="640">
+          <div class="honor-num-watermark">09</div>
+          <div class="honor-name">张颖惠</div>
+          <div class="honor-role">山西医科大学第二医院护理部部长</div>
+          <span class="honor-field" style="color:#E8720C; border-color:rgba(232,114,12,0.3); background:rgba(232,114,12,0.1);">护理管理</span>
+        </div>
+      </div>
+
+      <div class="content-block" style="margin-top: 40px;">
+        <div class="section-label" style="color: #E8720C;">巾帼领航 · 时代强音</div>
+        <div class="art-card" style="border-color: rgba(232,114,12,0.15); background: rgba(232,114,12,0.03);">
+          
+          <div class="person-header" style="padding: 0 0 16px 0;">
+            <div class="person-avatar" style="width: 44px; height: 44px; padding: 2px; border-color: rgba(232,114,12,0.3); background: transparent;">
+              <img src="media/fulian-logo.jpg" alt="山西省妇联" class="img-avatar" style="filter: sepia(0.2) contrast(1.1) brightness(0.9);">
+            </div>
+            <div class="person-info">
+              <h3 style="font-size: 1.1rem;">山西省妇女联合会</h3>
+              <div class="role" style="color: #E8720C;">三晋大地基层妇女群众的“娘家人”与引路人</div>
+            </div>
+          </div>
+
+          <p>改革开放以来，山西省妇联始终扎根基层，团结带领全省广大妇女投身经济社会建设。从脱贫攻坚到乡村振兴，从权益保护到关爱帮扶，各级基层妇联组织与妇联干部活跃在三晋大地的每一个角落，将党的声音和关怀送到千家万户，成为推动时代发展不可或缺的硬核“她”力量。</p>
+          
+          <div class="media-container" style="border-color: rgba(232,114,12,0.25); box-shadow: 0 4px 15px rgba(26,10,2,0.8); margin: 16px 0;">
+            
+            <img src="media/fulian-activity.jpg" alt="省妇联基层大宣讲" class="history-media" style="filter: sepia(0.2) contrast(1.1) brightness(0.9);">
+            
+            <div class="media-caption" style="background: linear-gradient(180deg, transparent, rgba(26,10,2,0.95)); color: #E8720C;">深耕基层：妇联干部在武乡等地激情宣讲</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <div style="background: linear-gradient(135deg, rgba(232,114,12,0.08), rgba(232,114,12,0.02)); border: 1px solid rgba(232,114,12,0.2); border-radius: 6px; padding: 32px 20px; text-align: center; box-shadow: inset 0 0 20px rgba(0,0,0,0.5);">
+          <div style="font-size: 11px; color: rgba(245,230,200,0.7); letter-spacing: 3px; margin-bottom: 12px;">山西省妇联 "三晋巾帼大宣讲" 覆盖人次</div>
+          <div style="font-family:'Ma Shan Zheng', cursive; font-size: 3.5rem; color: #E8720C; text-shadow: 0 2px 15px rgba(232,114,12,0.4); line-height: 1;">
+            700,000<span style="font-size:1.5rem; text-shadow:none;">+</span>
+          </div>
+          <div style="font-size: 12px; color: #E8720C; margin-top: 16px; letter-spacing: 4px; display:flex; align-items:center; justify-content:center; gap:8px;">
+            <span style="width:20px; height:1px; background:#E8720C; opacity:0.5;"></span>
+            将党的声音传遍千家万户
+            <span style="width:20px; height:1px; background:#E8720C; opacity:0.5;"></span>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center; padding: 0 28px; margin-top: 20px;">
+        <button class="btn-enter" style="border-color:#E8720C; color:#E8720C;" onclick="goTo('s-end')">前往尾厅 → 留下感悟</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== SCREEN END: CLOSING ====== -->
+  <div class="screen" id="s-end">
+    <div style="background: linear-gradient(160deg, #110505 0%, #0a0202 100%); padding: 60px 28px 100px; min-height:100vh;">
+      <div style="text-align:center; margin-bottom:36px;">
+        <div style="font-size:10px; letter-spacing:5px; color:rgba(201,168,76,0.5); margin-bottom:16px;">尾 厅 · EPILOGUE</div>
+        <div class="end-title">三晋巾帼英雄谱</div>
+        <div class="end-sub">留下您的观展感悟</div>
+        <div style="width:50px; height:1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 0 auto 20px;"></div>
+        <p style="font-size:13px; color:rgba(245,230,200,0.6); line-height:2; max-width:320px; margin:0 auto;">
+          山西，革命老区与能源重地。无数三晋女儿将个人命运融入宏大时代，她们是制度的破冰者，是经济浪潮的弄潮儿，是文化的守望者，也是扎根黄土地的无名英雄。
+        </p>
+      </div>
+
+      <div class="message-wall">
+        <h3>📝 观众留言墙</h3>
+        <div class="messages-display" id="msg-display">
+          <div class="msg-bubble">
+            <div class="msg-from">✦ 展览团队</div>
+            感谢您参观本展览，愿三晋女性的奋斗精神永远激励我们前行！
+          </div>
+        </div>
+        <div class="msg-input-row">
+          <input class="msg-input" id="msg-in" placeholder="写下您的感想..." maxlength="80">
+          <button class="msg-send" onclick="sendMsg()">发送</button>
+        </div>
+      </div>
+
+      <div class="qr-section">
+        <div class="qr-label">扫码分享展览</div>
+        <div id="qrcode"></div>
+        <div style="font-size:10px; color:rgba(245,230,200,0.35); margin-top:10px; letter-spacing:2px;">波澜壮阔半边天 · 改革开放以来山西女性纪实展</div>
+      </div>
+
+      <div class="credits">
+        <div style="margin-bottom:8px; color: var(--gold); opacity:0.6;">图文资料来源与版权声明</div>
+        图片资料：山西省档案馆 / 山西新闻网 / 中新网 / 共产党员网<br>
+        文献参考：《山西妇女运动史》《申纪兰传》等<br>
+        <br>
+        本展览依据学术规范整理，所有素材已注明出处<br>
+        © 2026 习思想实践作业 · 改革开放以来山西女性研究小组（20-3）
+      </div>
+    </div>
+  </div>
+
+</div><!-- end #app -->
+
+<!-- Nav Bar -->
+<div id="nav-bar">
+  <button class="nav-btn" id="nav-prev" onclick="navPrev()">◀ 上一页</button>
+  <div class="nav-title" id="nav-title">导览</div>
+  <button class="nav-btn" id="nav-next" onclick="navNext()">下一页 ▶</button>
+</div>
+
+<script>
+// ======== SCREEN MANAGEMENT ========
+const screens = ['s1','s2','s3','s4','s5','s6','s7','s-end'];
+const screenNames = ['封面','策展前言','导览大厅','第一展厅','第二展厅','第三展厅','第四展厅','尾厅'];
+let cur = 0;
+
+function goTo(id) {
+  const idx = screens.indexOf(id);
+  if (idx === -1) return;
+  document.getElementById(screens[cur]).classList.remove('active');
+  document.getElementById(id).classList.add('active');
+  document.getElementById(id).scrollTop = 0;
+  cur = idx;
+  updateNav();
+  updateProgress();
+  triggerAnimations(id);
+  if (id === 's2') startTypewriter();
+  if (id === 's-end') generateQR();
+}
+
+function navPrev() {
+  if (cur > 0) goTo(screens[cur - 1]);
+}
+
+function navNext() {
+  if (cur < screens.length - 1) goTo(screens[cur + 1]);
+}
+
+function updateNav() {
+  const nb = document.getElementById('nav-bar');
+  nb.className = cur > 0 ? 'visible' : '';
+  document.getElementById('nav-prev').style.opacity = cur > 0 ? '1' : '0.3';
+  document.getElementById('nav-next').style.opacity = cur < screens.length - 1 ? '1' : '0.3';
+  document.getElementById('nav-title').textContent = screenNames[cur];
+}
+
+function updateProgress() {
+  const pct = (cur / (screens.length - 1)) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+}
+
+// ======== TYPEWRITER ========
+const fwContent = `山西，革命老区与能源重地。从1978年的春风化雨到新时代的阔步前行，无数三晋女儿将个人命运融入宏大时代。
+
+她们是制度的破冰者，是经济浪潮的弄潮儿，是文化的守望者，也是扎根黄土地的无名英雄。
+
+本展览依托详实的史料与口述影像，邀您共赴一场跨越四十余年的数字时空之旅……`;
+
+let twStarted = false;
+function startTypewriter() {
+  if (twStarted) return;
+  twStarted = true;
+  const el = document.getElementById('fw-text');
+  let i = 0;
+  const interval = setInterval(() => {
+    el.textContent = fwContent.slice(0, i);
+    i++;
+    if (i > fwContent.length) clearInterval(interval);
+  }, 28);
+}
+
+// ======== SCROLL ANIMATIONS ========
+function triggerAnimations(id) {
+  setTimeout(() => {
+    if (id === 's4') animateTimeline();
+    if (id === 's7') animateHonors();
+  }, 200);
+}
+
+function animateTimeline() {
+  document.querySelectorAll('#tl1 .tl-item').forEach((el, i) => {
+    setTimeout(() => el.classList.add('visible'), i * 180);
+  });
+}
+
+function animateHonors() {
+  document.querySelectorAll('#honor-list .honor-item').forEach((el, i) => {
+    setTimeout(() => el.classList.add('visible'), i * 100);
+  });
+}
+
+// ======== SCROLL TRIGGER FOR S4 & S7 ========
+['s4','s7'].forEach(sid => {
+  document.getElementById(sid).addEventListener('scroll', function() {
+    if (sid === 's4') {
+      document.querySelectorAll('#tl1 .tl-item').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.9) el.classList.add('visible');
+      });
+    }
+    if (sid === 's7') {
+      document.querySelectorAll('#honor-list .honor-item').forEach((el, i) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.9) setTimeout(() => el.classList.add('visible'), i * 60);
+      });
+    }
+  });
+});
+
+// ======== MESSAGES (增强版：支持本地存储与回车发送) ========
+const defaultMsgs = [
+  { from: '访客留言', text: '看完申纪兰奶奶的故事，深受感动，劳动最光荣！' },
+  { from: '访客留言', text: '山西女性真的了不起，她们的故事值得被更多人知道。' },
+  { from: '访客留言', text: '非遗需要破圈也需要新生，郭梅花老师说得太好了！' }
+];
+
+// 核心发送函数
+function sendMsg() {
+  const inp = document.getElementById('msg-in');
+  const text = inp.value.trim();
+  if (!text) return; // 如果为空则不发送
+  
+  // 1. 立即显示在页面上
+  addMsg('观展者', text, true);
+  
+  // 2. 将留言保存到浏览器的本地缓存中（模拟数据库）
+  const savedMsgs = JSON.parse(localStorage.getItem('myExhibitionMsgs') || '[]');
+  savedMsgs.push(text);
+  localStorage.setItem('myExhibitionMsgs', JSON.stringify(savedMsgs));
+  
+  // 3. 清空输入框
+  inp.value = '';
+}
+
+// 核心添加节点函数
+function addMsg(from, text, isNew = false) {
+  const d = document.getElementById('msg-display');
+  const div = document.createElement('div');
+  div.className = 'msg-bubble';
+  // 只有新发送的留言才有淡入动画，加载历史留言时不需要动画
+  if (isNew) div.style.animation = 'fadeIn 0.3s'; 
+  div.innerHTML = `<div class="msg-from">✦ ${from}</div>${text}`;
+  d.appendChild(div);
+  // 滚动条自动滑到最底部
+  d.scrollTop = d.scrollHeight;
+}
+
+// 初始化留言板（在页面加载完成后执行）
+document.addEventListener('DOMContentLoaded', () => {
+  // 1. 延迟加载 3 条默认的系统留言
+  setTimeout(() => {
+    defaultMsgs.forEach((m, i) => {
+      setTimeout(() => addMsg(m.from, m.text, false), i * 400);
+    });
+  }, 500);
+
+  // 2. 延迟加载用户之前在浏览器留下的真实留言
+  setTimeout(() => {
+    const savedMsgs = JSON.parse(localStorage.getItem('myExhibitionMsgs') || '[]');
+    savedMsgs.forEach(text => addMsg('观展者', text, false));
+  }, 2000);
+
+  // 3. 绑定“回车键(Enter)”快速发送功能
+  const msgInput = document.getElementById('msg-in');
+  if (msgInput) {
+    msgInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault(); // 阻止默认的回车换行行为
+        sendMsg();
+      }
+    });
+  }
+});
+
+// ======== PARTICLES ========
+(function() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = `
+      left: ${Math.random() * 100}%;
+      width: ${1 + Math.random() * 2}px;
+      height: ${1 + Math.random() * 2}px;
+      --drift: ${(Math.random() - 0.5) * 60}px;
+      animation-duration: ${8 + Math.random() * 12}s;
+      animation-delay: ${Math.random() * -15}s;
+      opacity: 0;
+    `;
+    container.appendChild(p);
+  }
+})();
+
+// ======== KEYBOARD NAV ========
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navNext();
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navPrev();
+});
+
+// Init
+updateProgress();
+// ======== VIDEO CONTROL ========
+document.addEventListener('DOMContentLoaded', () => {
+  // 1. 第一展厅：申纪兰视频
+  const vidShen = document.getElementById('video-shen');
+  const overlayShen = document.getElementById('overlay-shen');
+  if (vidShen && overlayShen) vidShen.addEventListener('ended', () => overlayShen.classList.add('show'));
+
+  // 2. 第二展厅：杨霞科研视频
+  const vidYang = document.getElementById('video-yang');
+  const overlayYang = document.getElementById('overlay-yang');
+  if (vidYang && overlayYang) vidYang.addEventListener('ended', () => overlayYang.classList.add('show'));
+
+  // 3. 第三展厅：谢涛晋剧视频
+  const vidXie = document.getElementById('video-xie');
+  const overlayXie = document.getElementById('overlay-xie');
+  if (vidXie && overlayXie) vidXie.addEventListener('ended', () => overlayXie.classList.add('show'));
+
+  // 4. 第四展厅：吕莹宣讲视频
+  const vidLu = document.getElementById('video-lu');
+  const overlayLu = document.getElementById('overlay-lu');
+  if (vidLu && overlayLu) vidLu.addEventListener('ended', () => overlayLu.classList.add('show'));
+});
+
+// 点击重播按钮的通用函数
+function replayVideo(videoId, overlayId) {
+  const vid = document.getElementById(videoId);
+  const overlay = document.getElementById(overlayId);
+  if (vid && overlay) {
+    vid.currentTime = 0; 
+    vid.play();          
+    overlay.classList.remove('show'); 
+  }
+}
+</script>
+</body>
+</html>
