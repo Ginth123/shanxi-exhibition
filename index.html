@@ -6,7 +6,7 @@
 <title>波澜壮阔半边天——改革开放以来山西女性纪实展</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;400;600;700;900&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js"></script>
 <style>
   :root {
     --red: #8B1A1A;
@@ -801,11 +801,16 @@
   }
 
   #qrcode {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 164px; /* 固定宽度：140px内容 + 24px内边距 */
+    height: 164px; /* 固定高度 */
     padding: 12px;
     background: white;
     border-radius: 4px;
     border: 3px solid var(--gold);
+    margin: 0 auto; /* 确保居中 */
   }
 
   .credits {
@@ -1983,6 +1988,49 @@ function goTo(id) {
   triggerAnimations(id);
   if (id === 's2') startTypewriter();
   if (id === 's-end') generateQR();
+}
+
+// ======== QR CODE (增强容错版) ========
+let qrGenerated = false;
+function generateQR() {
+  if (qrGenerated) return;
+  qrGenerated = true;
+  const el = document.getElementById("qrcode");
+  el.innerHTML = '';
+  
+  const currentUrl = window.location.href;
+  
+  // 1. 拦截本地文件测试：如果是在电脑本地双击打开的 (file://)，手机扫了也是打不开的，直接给予醒目提示
+  if (currentUrl.startsWith('file://') || currentUrl.includes('127.0.0.1')) {
+    el.innerHTML = '<div style="color:#8B1A1A; font-size:12px; font-weight:bold; text-align:center;">请将网页部署上线<br>以生成有效二维码</div>';
+    return;
+  }
+
+  // 2. 正常生成二维码
+  const canvas = document.createElement('canvas');
+  el.appendChild(canvas);
+  
+  try {
+    QRCode.toCanvas(canvas, currentUrl, {
+      width: 140,
+      margin: 2,
+      color: { dark: '#8B1A1A', light: '#ffffff' },
+      errorCorrectionLevel: 'H'
+    }, function(err) {
+      if (err) {
+        el.innerHTML = '<div style="color:#8B1A1A; font-size:12px; font-weight:bold; text-align:center;">二维码生成失败<br>请刷新页面</div>';
+      }
+    });
+  } catch(e) {
+    // 3. 终极兜底方案：如果 CDN 依然被屏蔽导致 QRCode 未定义，启用免 JS 的纯线上图片 API
+    el.innerHTML = '';
+    const img = document.createElement('img');
+    // 使用 qrserver API 生成带红金主题色的二维码图片
+    img.src = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&margin=2&color=8B1A1A&data=${encodeURIComponent(currentUrl)}`;
+    img.style.width = '140px';
+    img.style.height = '140px';
+    el.appendChild(img);
+  }
 }
 
 function navPrev() {
